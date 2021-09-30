@@ -1,20 +1,20 @@
 package Entidades;
 
 public class Empresa {
-    private int RucEmpresa;
+    private int RUCEmpresa;
     private String NombreEmpresa;
 
-    public Empresa(int rucEmpresa, String nombreEmpresa) {
-        RucEmpresa = rucEmpresa;
+    public Empresa(int RUCEmpresa, String nombreEmpresa) {
+        this.RUCEmpresa = RUCEmpresa;
         NombreEmpresa = nombreEmpresa;
     }
 
-    public int getRucEmpresa() {
-        return RucEmpresa;
+    public int getRUCEmpresa() {
+        return RUCEmpresa;
     }
 
-    public void setRucEmpresa(int rucEmpresa) {
-        RucEmpresa = rucEmpresa;
+    public void setRUCEmpresa(int RUCEmpresa) {
+        this.RUCEmpresa = RUCEmpresa;
     }
 
     public String getNombreEmpresa() {
