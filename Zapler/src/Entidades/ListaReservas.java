@@ -6,6 +6,10 @@ public class ListaReservas {
     public ListaReservas(int IDListaReservas) {
         this.IDListaReservas = IDListaReservas;
     }
+    
+    public ListaReservas(){
+        
+    }
 
     public int getIDListaReservas() {
         return IDListaReservas;

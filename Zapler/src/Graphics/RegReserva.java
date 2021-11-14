@@ -33,6 +33,7 @@ public class RegReserva extends javax.swing.JFrame {
     MaquinariaBD maquinariaBD = new MaquinariaBD();
     AtencionClienteBD atencionClienteBD = new AtencionClienteBD();
     ReservaBD reservaBD = new ReservaBD();
+    ListaReservasBD listaResBD = new ListaReservasBD();
     RecibeAtencionBD recibeAtencionBD = new RecibeAtencionBD();
     Random rd = new Random();
     ArrayList<Reserva> reservasJuntas = new ArrayList<>();
@@ -278,7 +279,11 @@ public class RegReserva extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(!this.reservasJuntas.isEmpty())
         {
-            Guardar();
+            try {
+                Guardar();
+            } catch (Exception ex) {
+                Logger.getLogger(RegReserva.class.getName()).log(Level.SEVERE, null, ex);
+            }
             ListaNueva();
         }
         Regresar();
@@ -303,14 +308,14 @@ public class RegReserva extends javax.swing.JFrame {
     
     private void RegistrarRepresentanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarRepresentanteActionPerformed
         // TODO add your handling code here:
-        RegRepresentante regReserva = new RegRepresentante();
+        RegRepresentante regRepresentante = new RegRepresentante();
         RegReserva estaClase = this;
         int ruc;
-        regReserva.regReserva = estaClase;
+        regRepresentante.regReserva = estaClase;
         try {
             ruc = empresabd.obtenerRucEmp(EmpBox.getSelectedItem().toString());
-            regReserva.ruc = ruc;
-            regReserva.setVisible(true);
+            regRepresentante.ruc = ruc;
+            regRepresentante.setVisible(true);
             this.setVisible(false);
         } catch (Exception ex) {
             Logger.getLogger(RegReserva.class.getName()).log(Level.SEVERE, null, ex);
@@ -325,13 +330,20 @@ public class RegReserva extends javax.swing.JFrame {
         actualizarRepBox();
         if(!this.reservasJuntas.isEmpty())
         {
-            Guardar();
+            try {
+                Guardar();
+            } catch (Exception ex) {
+                Logger.getLogger(RegReserva.class.getName()).log(Level.SEVERE, null, ex);
+            }
             ListaNueva();
         }
     }//GEN-LAST:event_EmpBoxActionPerformed
 
-    private void Guardar()
+    private void Guardar() throws Exception
     {
+        ListaReservas listres = new ListaReservas();
+        listres.setIDListaReservas(ID_LISTANUMBER);
+        listaResBD.IngresarListaReservas(listres);
         int cantidadE = reservasJuntas.size();
         for(int i = 0; i < cantidadE; i++)
         {
@@ -369,7 +381,9 @@ public class RegReserva extends javax.swing.JFrame {
             ArrayList<Empresa> obtenerEmpresa = empresabd.obtenerEmpresa();
             EmpBox.addItem("");
             obtenerEmpresa.forEach( emp -> {
-                EmpBox.addItem(emp.getNombreEmpresa());
+                if(emp.isDisponibilidad()){
+                    EmpBox.addItem(emp.getNombreEmpresa());
+                }
             });
     }
     
@@ -517,6 +531,7 @@ public class RegReserva extends javax.swing.JFrame {
                 System.out.println("llenando recibe");
             ra.setIdAtencion(antencionid);
             ra.setRucEmpresa(RucEmp);
+            ra.setID_ListaReserva(ID_LISTANUMBER);
             reservaBD.IngresarReserva(res);
             System.out.println("Pedido, llenado");
                 System.out.println("llenando atencion");

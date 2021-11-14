@@ -5,7 +5,7 @@ import java.util.*;
 
 public class UsuarioBD {
 
-    public static String url = "jdbc:mysql://localhost:3306/zapleringsoftware";
+    public static String url = "jdbc:mysql://localhost:3306/zapler";
     public static String user = "root";
     public static String password = "Contrasena123@";
 
@@ -20,8 +20,10 @@ public class UsuarioBD {
             String Contra =  rs.getString("PASS");
             String Nombre = rs.getString("NOMBRE");
             String Apellido = rs.getString("APELLIDO");
+            String Rol = rs.getString("ROL");
+            boolean Disponibilidad = rs.getBoolean("DISPONIBILIDAD");
 
-            Usuario usuario = new Usuario(Codigo,Contra,Nombre,Apellido);
+            Usuario usuario = new Usuario(Codigo,Contra,Nombre,Apellido, Rol, Disponibilidad);
             listUsuario.add(usuario);
         }
         rs.close();
@@ -30,6 +32,8 @@ public class UsuarioBD {
      
         return listUsuario;
     }
+    
+    
     
     /*public static void main(String[] args) throws Exception {
          ArrayList<Usuario> listUsuario = InicioDeSesion(20181473, "soles");

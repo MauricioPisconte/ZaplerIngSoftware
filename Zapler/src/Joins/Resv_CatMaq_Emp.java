@@ -5,14 +5,12 @@ public class Resv_CatMaq_Emp {
     private int Inv_Id;
     private float Cantidad;
     private String Modelo;
-    private String NombreEmpresa;
 
-    public Resv_CatMaq_Emp(int codigoVendedor, int inv_Id, float cantidad, String modelo, String nombreEmpresa) {
+    public Resv_CatMaq_Emp(int codigoVendedor, int inv_Id, float cantidad, String modelo) {
         CodigoVendedor = codigoVendedor;
         Inv_Id = inv_Id;
         Cantidad = cantidad;
         Modelo = modelo;
-        NombreEmpresa = nombreEmpresa;
     }
 
     public int getCodigoVendedor() {
@@ -45,13 +43,5 @@ public class Resv_CatMaq_Emp {
 
     public void setModelo(String modelo) {
         Modelo = modelo;
-    }
-
-    public String getNombreEmpresa() {
-        return NombreEmpresa;
-    }
-
-    public void setNombreEmpresa(String nombreEmpresa) {
-        NombreEmpresa = nombreEmpresa;
     }
 }

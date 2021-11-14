@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class ReservaBD {
 
-    public static String url = "jdbc:mysql://localhost:3306/zapleringsoftware";
+    public static String url = "jdbc:mysql://localhost:3306/zapler";
     public static String user = "root";
     public static String password = "Contrasena123@";
 
@@ -23,13 +23,13 @@ public class ReservaBD {
         con.close();
     }
 
-    public ArrayList<Reserva> obtenerPedidoPorEmpresa(String nombreEmp) throws Exception{
+    /*public ArrayList<Reserva> obtenerPedidoPorEmpresa(int rucemp) throws Exception{
         ArrayList<Reserva> listaReserva = new ArrayList<>();
         Connection con = DriverManager.getConnection(url, user, password);
         String sql = "SELECT DISTINCT P.ID_RESERVA, P.CODIGO_VEND, P.INV_ID, P.CANTIDAD, P.ID_LISTARESERVAS " +
                 "FROM RESERVA P, USUARIO V, ATENCIONCLIENTE A, RECIBE_ATENCION R, EMPRESA E " +
                 "WHERE E.RUC_EMPRESA = R.RUC_EMPRESA AND R.ID_ATENCION = A.ID_ATENCION AND " +
-                "A.CODVENDEDOR = V.CODIGO AND V.CODIGO = P.CODIGO_VEND AND E.NOMBRE_EMPRESA = '"+nombreEmp+"'";
+                "A.CODVENDEDOR = V.CODIGO AND V.CODIGO = P.CODIGO_VEND AND E.RUC_EMPRESA = " + rucemp +"";
         PreparedStatement pst = con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         while(rs.next()){
@@ -39,7 +39,6 @@ public class ReservaBD {
             float Cantidad = rs.getFloat("CANTIDAD");
             int ListaRes = rs.getInt("ID_LISTARESERVAS");
 
-
             Reserva res = new Reserva(ID_Reserva, CodVend,  Inv_Id,  Cantidad, ListaRes);
             listaReserva.add(res);
         }
@@ -47,13 +46,12 @@ public class ReservaBD {
         pst.close();
         con.close();
         return listaReserva;
-    }
+    }*/
 
     public ArrayList<Reserva> obtenerReservasPorID(int IDLista) throws Exception{
         ArrayList<Reserva> listaReserva = new ArrayList<>();
         Connection con = DriverManager.getConnection(url, user, password);
-        String sql = "SELECT * FROM " +
-                "RESERVA WHERE ID_LISTARESERVAS = "+ IDLista + "";
+        String sql = "SELECT * FROM RESERVA WHERE RESERVA.ID_LISTARESERVAS = "+ IDLista +"";
         PreparedStatement pst = con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         while(rs.next()){
@@ -72,13 +70,4 @@ public class ReservaBD {
         return listaReserva;
     }
 
-    /*public void Procedimiento(int  codv, int ivnid) throws Exception{
-        Connection con = DriverManager.getConnection(url, user, password);
-        String sql = ""; //colocamos plsql o full cod de aqui?
-        PreparedStatement pst = con.prepareStatement(sql);
-        ResultSet rs = pst.executeQuery();
-        rs.close();
-        pst.close();
-        con.close();
-    }*/
 }

@@ -143,7 +143,7 @@ public class RegEmpresa extends javax.swing.JFrame {
         // TODO add your handling code here:
         int ruc =Integer.parseInt(RucField.getText());
         String nombre = NombreEmpFIeld.getText();
-        Empresa empresa = new Empresa(ruc, nombre); 
+        Empresa empresa = new Empresa(ruc, nombre, true); 
         try {
             empbd.IngresarEmpresa(empresa);
             JOptionPane.showMessageDialog(this,"Registro exitoso de empresa " + nombre);

@@ -143,8 +143,8 @@ public class Inicio extends javax.swing.JFrame {
         int  code = Integer.parseInt(CampoCV.getText());
         String pass = this.CampoPassCV.getText();
         Usuario listaU = null;
-        
-        try {
+         
+       try {
             listaU = db.InicioDeSesion(code, pass).get(0);
             //System.out.println(listaU.getNombre());
             //System.out.println(listaU.getApellido());
@@ -152,13 +152,30 @@ public class Inicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Usuario o contraseña mal puestos");
         }
         if(listaU != null ){
-            JOptionPane.showMessageDialog(this,"Bienvenido, " + listaU.getNombre() +"." );
-            Menu menu = new Menu();
-            menu.CodigoVendedor = code;
-            menu.setVisible(true);
-            Inicio inicio = this;
-            menu.inicio = inicio;
-            this.setVisible(false);
+            if(listaU.isDisponibilidad())
+            {
+                            JOptionPane.showMessageDialog(this,"Bienvenido, " + listaU.getNombre() +"." );
+                        if(listaU.getRol().equalsIgnoreCase("Vendedor")){
+                            Menu menu = new Menu();
+                            menu.CodigoVendedor = code;
+                            menu.setVisible(true);
+                            Inicio inicio = this;
+                            menu.inicio = inicio;
+                        }
+                        else if(listaU.getRol().equalsIgnoreCase("Administrador"))
+                        {
+                            AdminOP admin = new AdminOP();
+                            admin.CodigoAdmin = code;
+                            admin.setVisible(true);
+                            Inicio inicio = this;
+                            admin.inicio = inicio;
+                        }
+                        this.setVisible(false);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this,"Este vendedor no fingura en la lista de usuarios" );
+            }
         }
     }//GEN-LAST:event_LoginButtonActionPerformed
 

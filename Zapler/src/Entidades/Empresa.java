@@ -3,10 +3,12 @@ package Entidades;
 public class Empresa {
     private int RUCEmpresa;
     private String NombreEmpresa;
+    private boolean disponibilidad;
 
-    public Empresa(int RUCEmpresa, String nombreEmpresa) {
+    public Empresa(int RUCEmpresa, String NombreEmpresa, boolean disponibilidad) {
         this.RUCEmpresa = RUCEmpresa;
-        NombreEmpresa = nombreEmpresa;
+        this.NombreEmpresa = NombreEmpresa;
+        this.disponibilidad = disponibilidad;
     }
 
     public int getRUCEmpresa() {
@@ -21,7 +23,17 @@ public class Empresa {
         return NombreEmpresa;
     }
 
-    public void setNombreEmpresa(String nombreEmpresa) {
-        NombreEmpresa = nombreEmpresa;
+    public void setNombreEmpresa(String NombreEmpresa) {
+        this.NombreEmpresa = NombreEmpresa;
     }
+
+    public boolean isDisponibilidad() {
+        return disponibilidad;
+    }
+
+    public void setDisponibilidad(boolean disponibilidad) {
+        this.disponibilidad = disponibilidad;
+    }
+
+    
 }

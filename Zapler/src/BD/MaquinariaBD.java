@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class MaquinariaBD {
-    public static String url = "jdbc:mysql://localhost:3306/zapleringsoftware";
+    public static String url = "jdbc:mysql://localhost:3306/zapler";
     public static String user = "root";
     public static String password = "Contrasena123@";
 

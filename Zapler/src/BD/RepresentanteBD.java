@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class RepresentanteBD {
-    public static String url = "jdbc:mysql://localhost:3306/zapleringsoftware";
+    public static String url = "jdbc:mysql://localhost:3306/zapler";
     public static String user = "root";
     public static String password = "Contrasena123@";
 
@@ -39,6 +39,15 @@ public class RepresentanteBD {
         pst.close();
         conn.close();
         return listRepresentante;
+    }
+    
+    public void actualizarRUCrepresentante(int nuevo, int original) throws Exception{
+        Connection conn = DriverManager.getConnection(url, user, password);
+        String sql = "UPDATE REPRESENTANTE SET RUC = ?  WHERE RUC = " + original +"";
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setInt(1, nuevo);
+                pst.executeUpdate();
+            }
     }
 
 }

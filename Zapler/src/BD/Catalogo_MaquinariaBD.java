@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Catalogo_MaquinariaBD {
-    public static String url = "jdbc:mysql://localhost:3306/zapleringsoftware";
+    public static String url = "jdbc:mysql://localhost:3306/zapler";
     public static String user = "root";
     public static String password = "Contrasena123@";
 
@@ -33,7 +33,7 @@ public class Catalogo_MaquinariaBD {
         }
         else
         {
-            sql +=" 1=1";
+            sql +=" 1";
         }
         if(!marca.equals(""))
         {
@@ -41,7 +41,7 @@ public class Catalogo_MaquinariaBD {
         }
         else
         {
-            sql +=" AND 1=1";
+            sql +=" AND 1";
         }
         if(!tipo.equals(""))
         {
@@ -49,7 +49,7 @@ public class Catalogo_MaquinariaBD {
         }
         else
         {
-            sql +=" AND 1=1";
+            sql +=" AND 1";
         }
 
         PreparedStatement pst = con.prepareStatement(sql);
