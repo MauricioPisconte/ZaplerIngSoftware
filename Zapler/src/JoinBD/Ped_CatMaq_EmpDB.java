@@ -8,7 +8,7 @@ public class Ped_CatMaq_EmpDB {
     public static String user = "root";
     public static String password = "Contrasena123@";
 
-    public static ArrayList<Resv_CatMaq_Emp> Join_Ped_CatMaq(int IdLista) throws Exception {
+    public ArrayList<Resv_CatMaq_Emp> Join_Ped_CatMaq(int IdLista) throws Exception {
         ArrayList<Resv_CatMaq_Emp> listaJoinPedCatMaqEmp = new ArrayList<>();
         Connection conn = DriverManager.getConnection(url, user, password);
         /*String sql = "SELECT DISTINCT P.CODIGO_VEND, P.INV_ID, P.CANTIDAD, C.MODELO, E.NOMBRE_EMPRESA FROM RESERVA P, " +
@@ -21,16 +21,9 @@ public class Ped_CatMaq_EmpDB {
 "catalogo_maquinaria C, listareserva L, reserva P, usuario V, atencioncliente A, recibe_atencion R, " +
 "empresa E, maquinaria M WHERE M.ID_MAQ = C.ID_MAQ AND M.INV_ID = P.INV_ID " +
 " AND P.CODIGO_VEND = V.CODIGO AND V.CODIGO = A.CODVENDEDOR " +
-"AND A.ID_ATENCION = R.ID_ATENCION AND " +
+"AND A.ID_ATENCION = R.ID_ATENCION AND R.ID_LISTARESERVA = P.ID_LISTARESERVAS AND " +
 "R.RUC_EMPRESA = E.RUC_EMPRESA AND R.ID_LISTARESERVA = L.ID_LISTARESERVAS AND L.ID_LISTARESERVAS = "+ IdLista+ "";
-        
-        /*SELECT DISTINCT L.ID_LISTARESERVAS FROM
-        catalogo_maquinaria C, listareserva L, reserva P, usuario V, atencioncliente A, recibe_atencion R, empresa E, maquinaria M
-        WHERE M.ID_MAQ = C.ID_MAQ AND M.INV_ID = P.INV_ID AND
-        L.ID_LISTARESERVAS = P.ID_LISTARESERVAS AND P.CODIGO_VEND = V.CODIGO AND V.CODIGO = A.CODVENDEDOR AND 
-        A.ID_ATENCION = R.ID_ATENCION AND R.RUC_EMPRESA = E.RUC_EMPRESA AND R.ID_LISTARESERVA = P.ID_LISTARESERVAS 
-        AND E.NOMBRE_EMPRESA = 'SONY'*/
-        
+                
         PreparedStatement pst = conn.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         while (rs.next()) {

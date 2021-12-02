@@ -87,7 +87,7 @@ public class EliminarReserva extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID Rerserva", "Codigo vend", "Inv ID", "Cantidad", "Lista ID"
+                "Cod Vend", "Inv ID", "Cantidad", "Modelo"
             }
         ));
         TablaPedido.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -238,15 +238,14 @@ public class EliminarReserva extends javax.swing.JFrame {
     
     private void actualizarReservas() throws Exception{
  
-                int reserva = Integer.parseInt(this.ReservasBox.getSelectedItem().toString());
-            ArrayList<Reserva> reservas = reservabd.obtenerReservasPorID(reserva);
+            int reserva = Integer.parseInt(this.ReservasBox.getSelectedItem().toString());
+            ArrayList<Resv_CatMaq_Emp> reservas =joinresbd.Join_Ped_CatMaq(reserva); //reservabd.obtenerReservasPorID(reserva);
             DefaultTableModel tb2 = (DefaultTableModel)TablaPedido.getModel();
             reservas.forEach((objeto) -> {
-            tb2.addRow(new Object[]{objeto.getID_Reserva(), 
-                objeto.getCodigoVendedor(), 
-                objeto.getInv_Id(),
-            objeto.getCantidad(), 
-            objeto.getID_ListaReservas()});
+            tb2.addRow(new Object[]{objeto.getCodigoVendedor(),
+            objeto.getInv_Id(),
+            objeto.getCantidad(),
+            objeto.getModelo()});
         });
     }
     

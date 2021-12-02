@@ -10,6 +10,7 @@ public class RecibeAtencionBD {
     public static String password = "Contrasena123@";
     public void IngresarRecibeAtencion(RecibeAtencion rban) throws Exception{
         Connection con = DriverManager.getConnection(url, user, password);
+        System.out.println("id_lista reserva que llega a recibe atencion: "+ rban.getID_ListaReserva());
         String sql = "INSERT INTO RECIBE_ATENCION VALUES(?, ?, ?)";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setInt(1, rban.getRucEmpresa());

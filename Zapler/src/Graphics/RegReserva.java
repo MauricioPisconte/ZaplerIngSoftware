@@ -36,7 +36,7 @@ public class RegReserva extends javax.swing.JFrame {
     ListaReservasBD listaResBD = new ListaReservasBD();
     RecibeAtencionBD recibeAtencionBD = new RecibeAtencionBD();
     Random rd = new Random();
-    ArrayList<Reserva> reservasJuntas = new ArrayList<>();
+    ArrayList<Reserva> reservasJuntas;
     int ID_LISTANUMBER = rd.nextInt(99999999-10000000+1)+10000000;
     
     public Menu menu;
@@ -44,6 +44,7 @@ public class RegReserva extends javax.swing.JFrame {
     public RegReserva() throws Exception {
         initComponents();
         setLocationRelativeTo(this);
+        ListaNueva();
         actualizarEmpresaBox();
         actualizarMarcayTipo();
         //actualizarMaqyCatMaq();
@@ -349,7 +350,9 @@ public class RegReserva extends javax.swing.JFrame {
         {
             System.out.println("Entrar bucle");
             reservasJuntas.get(i).setID_ListaReservas(ID_LISTANUMBER);
+            reservaBD.IngresarReserva(reservasJuntas.get(i));
         }
+        ListaNueva();
         ID_LISTANUMBER= rd.nextInt(99999999-10000000+1)+10000000;
     }
     
@@ -520,7 +523,7 @@ public class RegReserva extends javax.swing.JFrame {
             res.setCodigoVendedor(menu.CodigoVendedor);
             res.setInv_Id(invid);
             res.setCantidad(cantidadReservada);       
-            res.setID_ListaReservas(ID_LISTANUMBER); //temporal
+           // res.setID_ListaReservas(ID_LISTANUMBER); //temporal
             System.out.println("pedido establecido");
                 System.out.println("llenando atencion");
             act.setIDAtencion(antencionid);
@@ -532,7 +535,7 @@ public class RegReserva extends javax.swing.JFrame {
             ra.setIdAtencion(antencionid);
             ra.setRucEmpresa(RucEmp);
             ra.setID_ListaReserva(ID_LISTANUMBER);
-            reservaBD.IngresarReserva(res);
+            //reservaBD.IngresarReserva(res);
             System.out.println("Pedido, llenado");
                 System.out.println("llenando atencion");
             atencionClienteBD.IngresarAtencionCliente(act);

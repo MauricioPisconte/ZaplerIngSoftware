@@ -11,13 +11,14 @@ public class ReservaBD {
 
     public void IngresarReserva(Reserva reser) throws Exception{
         Connection con = DriverManager.getConnection(url, user, password);
+        System.out.println("id lista reserva llegado a la reserva: " + reser.getID_ListaReservas());
         String sql = "INSERT INTO RESERVA VALUES(?,?, ?, ?, ?)";
         PreparedStatement pst = con.prepareStatement(sql);
         pst.setInt(1, reser.getID_Reserva());
         pst.setInt(2, reser.getCodigoVendedor());
         pst.setInt(3, reser.getInv_Id());
-        pst.setFloat(4, reser.getCantidad());
-        pst.setFloat(5, reser.getID_ListaReservas());
+        pst.setInt(4, reser.getCantidad());
+        pst.setInt(5, reser.getID_ListaReservas());
         pst.executeUpdate();
         pst.close();
         con.close();
@@ -58,7 +59,7 @@ public class ReservaBD {
             int ID_Reserva = rs.getInt("ID_RESERVA");
             int CodVend = rs.getInt("CODIGO_VEND");
             int Inv_Id =  rs.getInt("INV_ID");
-            float Cantidad = rs.getFloat("CANTIDAD");
+            int Cantidad = rs.getInt("CANTIDAD");
             int ListaRes = rs.getInt("ID_LISTARESERVAS");
 
             Reserva ped = new Reserva(ID_Reserva, CodVend,  Inv_Id,  Cantidad, ListaRes);

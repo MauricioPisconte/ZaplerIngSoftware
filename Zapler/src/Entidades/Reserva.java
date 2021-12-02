@@ -4,10 +4,10 @@ public class Reserva {
     private int ID_Reserva;
     private int CodigoVendedor;
     private int Inv_Id;
-    private float Cantidad;
+    private int Cantidad;
     private int ID_ListaReservas;
 
-    public Reserva(int ID_Reserva, int CodigoVendedor, int Inv_Id, float Cantidad, int ID_ListaReservas) {
+    public Reserva(int ID_Reserva, int CodigoVendedor, int Inv_Id, int Cantidad, int ID_ListaReservas) {
         this.ID_Reserva = ID_Reserva;
         this.CodigoVendedor = CodigoVendedor;
         this.Inv_Id = Inv_Id;
@@ -42,11 +42,11 @@ public class Reserva {
         this.Inv_Id = Inv_Id;
     }
 
-    public float getCantidad() {
+    public int getCantidad() {
         return Cantidad;
     }
 
-    public void setCantidad(float Cantidad) {
+    public void setCantidad(int Cantidad) {
         this.Cantidad = Cantidad;
     }
 
