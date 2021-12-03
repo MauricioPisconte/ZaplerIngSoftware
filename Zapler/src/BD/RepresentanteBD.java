@@ -26,19 +26,19 @@ public class RepresentanteBD {
         Connection conn = DriverManager.getConnection(url, user, password);
         String sql = "SELECT * FROM REPRESENTANTE WHERE RUC = " + ruc+ "";
         PreparedStatement pst = conn.prepareStatement(sql);
-        ResultSet rs = pst.executeQuery();
-        while(rs.next()){
+        ResultSet rs = pst.executeQuery(); //1
+        while(rs.next()){ //2
             int Dni = rs.getInt("DNI");
             String Nombre =  rs.getString("NOMBRE");
             String Apellido = rs.getString("APELLIDO");
             int RucEmpresa = rs.getInt("RUC");
             Representante pdc = new Representante(Dni,  Nombre,  Apellido,  RucEmpresa);
-            listRepresentante.add(pdc);
+            listRepresentante.add(pdc); //3
         }
         rs.close();
         pst.close();
         conn.close();
-        return listRepresentante;
+        return listRepresentante; //4
     }
     
     public void actualizarRUCrepresentante(int nuevo, int original) throws Exception{

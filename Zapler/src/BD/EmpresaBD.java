@@ -22,34 +22,33 @@ public class EmpresaBD {
     }
 
     public ArrayList<Empresa> obtenerEmpresa() throws Exception{
-        System.out.println("Se ejecuta ComboBoxEmpresa en clase java");
-        ArrayList<Empresa> listaEmpresa = new ArrayList<>();
-        Connection con = DriverManager.getConnection(url, user, password);
-        String sql = "SELECT * FROM EMPRESA";
+        ArrayList<Empresa> listaEmpresa = new ArrayList<>(); 
+        Connection con = DriverManager.getConnection(url, user, password); 
+        String sql = "SELECT * FROM EMPRESA"; 
         PreparedStatement pst = con.prepareStatement(sql);
-        ResultSet rs = pst.executeQuery();
-        while(rs.next()){
+        ResultSet rs = pst.executeQuery(); //1
+        while(rs.next()){ //2
             int RucEmpresa = rs.getInt("RUC_EMPRESA");
             String NombreEmpresa =  rs.getString("NOMBRE_EMPRESA");
             boolean Disponibilidad = rs.getBoolean("DISPONIBILIDAD");
 
             Empresa emp = new Empresa(RucEmpresa, NombreEmpresa,Disponibilidad);
-            listaEmpresa.add(emp);
+            listaEmpresa.add(emp); //3
         }
         rs.close();
-        pst.close();
-        con.close();
-        return listaEmpresa;
+        pst.close(); 
+        con.close(); 
+        return listaEmpresa; //4
     }
 
     public void actualizarDisponibilidad(int ruc, boolean estado) throws Exception{      
-        Connection conn = DriverManager.getConnection(url, user, password);
-        String sql = "UPDATE EMPRESA SET DISPONIBILIDAD = ?  WHERE RUC_EMPRESA =" + ruc +"";
-            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+        Connection conn = DriverManager.getConnection(url, user, password); 
+        String sql = "UPDATE EMPRESA SET DISPONIBILIDAD = ?  WHERE RUC_EMPRESA =" + ruc +""; //1
+            try (PreparedStatement pst = conn.prepareStatement(sql)) { //2
                 pst.setBoolean(1, estado);
-                pst.executeUpdate();
+                pst.executeUpdate(); //3
             }
-            System.out.println("actualizado correctamente");
+            System.out.println("actualizado correctamente"); //4
     }
     
     public int obtenerRucEmp(String nombre) throws Exception{

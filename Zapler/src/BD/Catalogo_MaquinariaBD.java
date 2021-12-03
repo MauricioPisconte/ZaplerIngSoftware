@@ -26,47 +26,40 @@ public class Catalogo_MaquinariaBD {
     public ArrayList<Catalogo_Maquinaria> obtenerCatalogo(String modelo, String marca, String tipo) throws Exception{
         ArrayList<Catalogo_Maquinaria> listaCatalogo = new ArrayList<>();
         Connection con = DriverManager.getConnection(url, user, password);
-        String sql = "SELECT * FROM CATALOGO_MAQUINARIA WHERE ";
-        if(!modelo.equals(""))
+        String sql = "SELECT * FROM CATALOGO_MAQUINARIA WHERE "; //1
+        if(!modelo.equals("")) //2
         {
-            sql += " MODELO = '"+modelo + "'";
+            sql += " MODELO = '"+modelo + "'"; //3
+        }else{
+            sql +=" 1"; //4
         }
-        else
+        if(!marca.equals("")) //5
         {
-            sql +=" 1";
+            sql += " AND MARCA = '"+marca+ "'"; //6
+        }else{
+            sql +=" AND 1"; //7
         }
-        if(!marca.equals(""))
+        if(!tipo.equals("")) //8
         {
-            sql += " AND MARCA = '"+marca+ "'";
+            sql += " AND TIPO = '"+tipo+ "'"; //9
+        }else{
+            sql +=" AND 1"; //10
         }
-        else
-        {
-            sql +=" AND 1";
-        }
-        if(!tipo.equals(""))
-        {
-            sql += " AND TIPO = '"+tipo+ "'";
-        }
-        else
-        {
-            sql +=" AND 1";
-        }
-
         PreparedStatement pst = con.prepareStatement(sql);
-        ResultSet rs = pst.executeQuery();
-        while(rs.next()){
+        ResultSet rs = pst.executeQuery(); //11
+        while(rs.next()){ //12
             int IdMaquinaria= rs.getInt("ID_MAQ");
             String Tipo = rs.getString("TIPO");
             int costo = rs.getInt("COSTO");
             String Marca = rs.getString("MARCA");
             String Modelo = rs.getString("MODELO");
             Catalogo_Maquinaria catmaq = new Catalogo_Maquinaria(IdMaquinaria, Tipo, costo, Marca, Modelo);
-            listaCatalogo.add(catmaq);
+            listaCatalogo.add(catmaq); //13
         }
         rs.close();
         pst.close();
         con.close();
-        return listaCatalogo;
+        return listaCatalogo; //14
     }
 
     public ArrayList<Catalogo_Maquinaria> ObtenerCatMaq() throws Exception{

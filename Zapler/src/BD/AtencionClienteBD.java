@@ -28,7 +28,7 @@ public class AtencionClienteBD {
         ArrayList<AtencionCliente> listaAtencionCliente = new ArrayList<>();
         Connection con = DriverManager.getConnection(url, user, password);
         String sql = "SELECT A.ID_ATENCION, A.TIEMPO_INICIO_SESION, A.FECHA, A.DESCRIPCION, A.CODVENDEDOR  " +
-                "FROM ATENCIONCLIENTE A, EMPRESA E, RECIBEATENCION R " +
+                "FROM ATENCIONCLIENTE A, EMPRESA E, RECIBE_ATENCION R " +
                 "WHERE R.RUC_EMPRESA = E.RUC_EMPRESA AND R.ID_ATENCION = A.ID_ATENCION "+
                 "AND E.NOMBRE_EMPRESA = '"+nombreEmp+"'";
         PreparedStatement pst = con.prepareStatement(sql);

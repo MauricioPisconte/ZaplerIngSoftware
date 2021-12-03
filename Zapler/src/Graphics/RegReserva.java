@@ -33,9 +33,12 @@ public class RegReserva extends javax.swing.JFrame {
     MaquinariaBD maquinariaBD = new MaquinariaBD();
     AtencionClienteBD atencionClienteBD = new AtencionClienteBD();
     ReservaBD reservaBD = new ReservaBD();
+    ContactoVendProvBD Cbd = new ContactoVendProvBD();
     ListaReservasBD listaResBD = new ListaReservasBD();
     RecibeAtencionBD recibeAtencionBD = new RecibeAtencionBD();
     Random rd = new Random();
+    AtencionClienteBD abd = new AtencionClienteBD();
+    ProveedorBD prbd = new  ProveedorBD();
     ArrayList<Reserva> reservasJuntas;
     int ID_LISTANUMBER = rd.nextInt(99999999-10000000+1)+10000000;
     
@@ -325,6 +328,52 @@ public class RegReserva extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        String modelo = this.ModeloBox.getSelectedItem().toString();
+        String marca = this.MarcaBox.getSelectedItem().toString();
+        String tipo = this.TipoBox.getSelectedItem().toString();
+        if(modelo.equalsIgnoreCase("") ||  marca.equalsIgnoreCase("") || tipo.equalsIgnoreCase(""))
+        {
+            JOptionPane.showMessageDialog(null, "Se envió un mensaje de importación al administrador de ventas :D");
+            ContactoVendProv pdc = new ContactoVendProv();
+            Random num = new Random();
+            int n = (-1)*(num.nextInt(5)+1);
+            int codigoVend = menu.CodigoVendedor;
+            try {
+                String fecha = abd.fechahora();
+                String fech = "";
+                for(int i=0; i<10;i++)
+                {
+                    fech += fecha.charAt(i);
+                }
+                int rpr = prbd.obtenerNP(tipo, marca);
+                pdc.setCodVendedor(codigoVend);
+                pdc.setRucProveedor(rpr);
+                System.out.println(fech);
+                pdc.setFechaU(fech);
+                Cbd.IngresarContactoVendProvee(pdc);
+                maquinariaBD.actualizarStock(tipo, marca, modelo, n);
+                maquinariaBD.actualizarDispo(tipo, marca, modelo,"DISPONIBLE");
+            } catch (Exception ex) {
+                String fecha;
+                try {
+                    fecha = abd.fechahora();
+                    String fech = "";
+                    for(int i=0; i<10;i++)
+                    {
+                        fech += fecha.charAt(i);
+                    }
+                    int rpr = prbd.obtenerNP(tipo, marca);
+                    Cbd.actualizarfecha(fech, codigoVend, rpr);
+                    maquinariaBD.actualizarStock(tipo, marca, modelo, n);
+                    maquinariaBD.actualizarDispo(tipo, marca, modelo,"DISPONIBLE");
+                } catch (Exception ex1) {
+                    Logger.getLogger(RegReserva.class.getName()).log(Level.SEVERE, null, ex1);
+                    this.CantidadField.setText("");
+                }
+            }  
+        }else{
+            
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void EmpBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmpBoxActionPerformed
@@ -470,11 +519,8 @@ public class RegReserva extends javax.swing.JFrame {
         String desct = model.getValueAt(index, 7).toString();
         String precio = model.getValueAt(index, 1).toString();
         
-        int cantidadReservada = Integer.parseInt(this.CantidadField.getText());
-        
-        // Sueles encontrarme en cualquier lugar        
-        
         try {
+            int cantidadReservada = Integer.parseInt(this.CantidadField.getText());
             int numstock = maquinariaBD.verStock(modelo, marca, tipo);
             if(numstock <= 0 || cantidadReservada > numstock )
             {
@@ -498,7 +544,7 @@ public class RegReserva extends javax.swing.JFrame {
             
         int antencionid = rd.nextInt(99999999-10000000+1)+10000000;
         AtencionCliente act = new AtencionCliente();
-        //PersonaDeContacto pdc = new PersonaDeContacto();
+        //PersonaDeContacto pdc = new PersonaDeContacto(); :D
         //Empresa emp = new Empresa();
         Reserva res = new Reserva();
         RecibeAtencion ra = new RecibeAtencion();
@@ -518,35 +564,30 @@ public class RegReserva extends javax.swing.JFrame {
         }
        
             int RucEmp = empresabd.obtenerRucEmp(EmpBox.getSelectedItem().toString());
-            System.out.println("pedido de: "+RucEmp);
+            //LLENAR RESERVAS
             res.setID_Reserva(rd.nextInt(99999999-10000000+1)+10000000);
             res.setCodigoVendedor(menu.CodigoVendedor);
             res.setInv_Id(invid);
             res.setCantidad(cantidadReservada);       
-           // res.setID_ListaReservas(ID_LISTANUMBER); //temporal
-            System.out.println("pedido establecido");
-                System.out.println("llenando atencion");
+           // LLENAR ATENCION CLIENTE
             act.setIDAtencion(antencionid);
             act.setTiempoInicioAtencion(hora);
             act.setFecha(fecha);
             act.setDescripcion("Usuario atendido");
             act.setCodVendedor(menu.CodigoVendedor);
-                System.out.println("llenando recibe");
+            //LLENA RECIBE ATENCION
             ra.setIdAtencion(antencionid);
             ra.setRucEmpresa(RucEmp);
             ra.setID_ListaReserva(ID_LISTANUMBER);
             //reservaBD.IngresarReserva(res);
-            System.out.println("Pedido, llenado");
-                System.out.println("llenando atencion");
             atencionClienteBD.IngresarAtencionCliente(act);
-            System.out.println("atencion, llenado");
-                System.out.println("llenando recibe");
             recibeAtencionBD.IngresarRecibeAtencion(ra);
-            System.out.println("recibe, llenado");
             reservasJuntas.add(res);
             }
+            this.CantidadField.setText("");
         } catch (Exception ex) {
-                        Logger.getLogger(RegReserva.class.getName()).log(Level.SEVERE, null, ex);
+                      JOptionPane.showMessageDialog(null, "Error: Se introdujo un valor distinto al numérico");
+                      this.CantidadField.setText("");
         }      
         actualizarMarcayTipo();
     }//GEN-LAST:event_invtabMouseClicked

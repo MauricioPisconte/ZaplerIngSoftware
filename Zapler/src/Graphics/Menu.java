@@ -140,7 +140,15 @@ public class Menu extends javax.swing.JFrame {
 
     private void VerCatalogoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerCatalogoButtonActionPerformed
         // TODO add your handling code here:
-        
+        try {
+            // TODO add your handling code here:
+            Catalogo cat = new Catalogo();
+            cat.menu = this;
+            this.setVisible(false);
+            cat.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_VerCatalogoButtonActionPerformed
 
     private void ReaReservaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReaReservaButtonActionPerformed
@@ -174,6 +182,10 @@ public class Menu extends javax.swing.JFrame {
 
     private void HAtencionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HAtencionButtonActionPerformed
         // TODO add your handling code here:
+        HistorialAtencion hat = new HistorialAtencion();
+        hat.menu = this;
+        this.setVisible(false);
+        hat.setVisible(true);
     }//GEN-LAST:event_HAtencionButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

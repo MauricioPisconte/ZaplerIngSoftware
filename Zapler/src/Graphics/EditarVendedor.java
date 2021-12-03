@@ -65,6 +65,11 @@ public class EditarVendedor extends javax.swing.JFrame {
         });
 
         ElminarVendedor.setText("Estado de vendedor");
+        ElminarVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ElminarVendedorActionPerformed(evt);
+            }
+        });
 
         SalirSesion.setText("Cerra sesión");
 
@@ -132,6 +137,10 @@ public class EditarVendedor extends javax.swing.JFrame {
     private void RegistrarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarVendedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_RegistrarVendedorActionPerformed
+
+    private void ElminarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ElminarVendedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ElminarVendedorActionPerformed
 
     /**
      * @param args the command line arguments

@@ -11,6 +11,8 @@ public class ContactoVendProv {
         this.fechaU = fechaU;
     }
 
+    public ContactoVendProv(){}
+    
     public int getCodVendedor() {
         return CodVendedor;
     }

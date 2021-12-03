@@ -14,8 +14,8 @@ public class UsuarioBD {
         Connection con = DriverManager.getConnection(url, user, password);
         String sql = "SELECT * FROM USUARIO WHERE CODIGO ="+cod+" AND PASS = '"+pass + "'";
         PreparedStatement pst = con.prepareStatement(sql);
-        ResultSet rs = pst.executeQuery(sql);
-        while(rs.next()){
+        ResultSet rs = pst.executeQuery(sql); //1
+        while(rs.next()){ //2
             int Codigo = rs.getInt("CODIGO");
             String Contra =  rs.getString("PASS");
             String Nombre = rs.getString("NOMBRE");
@@ -24,16 +24,28 @@ public class UsuarioBD {
             boolean Disponibilidad = rs.getBoolean("DISPONIBILIDAD");
 
             Usuario usuario = new Usuario(Codigo,Contra,Nombre,Apellido, Rol, Disponibilidad);
-            listUsuario.add(usuario);
+            listUsuario.add(usuario);//3
         }
         rs.close();
         pst.close();
         con.close();
-     
-        return listUsuario;
+        System.out.println("Usuario seleccion"); 
+        return listUsuario; //4
     }
-    
-    
+     
+    public void IngresarUsuario(Usuario usuario) throws Exception{
+        Connection con = DriverManager.getConnection(url, user, password);
+        String sql = "INSERT INTO USUARIO VALUES(?,?, ?, ?, ?)";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setInt(1, usuario.getCodigo());
+        pst.setString(2, usuario.getPass());
+        pst.setString(3, usuario.getNombre());
+        pst.setString(4, usuario.getApellido());
+        pst.setBoolean(5, usuario.isDisponibilidad());
+        pst.executeUpdate();
+        pst.close();
+        con.close();
+    }
     
     /*public static void main(String[] args) throws Exception {
          ArrayList<Usuario> listUsuario = InicioDeSesion(20181473, "soles");

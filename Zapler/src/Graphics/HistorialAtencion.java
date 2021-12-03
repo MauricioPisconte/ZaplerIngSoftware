@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Jesus
  */
-public class EliminarReserva extends javax.swing.JFrame {
+public class HistorialAtencion extends javax.swing.JFrame {
 
     /**
      * Creates new form Inicio
@@ -28,9 +28,10 @@ public class EliminarReserva extends javax.swing.JFrame {
     EmpresaBD empresabd = new EmpresaBD();
     ReservaBD reservabd = new ReservaBD();
     ListaReservasBD listaBD = new ListaReservasBD();
+    AtencionClienteBD atencionbd = new AtencionClienteBD();
     public Menu menu;
     
-    public EliminarReserva() {
+    public HistorialAtencion() {
         initComponents();
         setLocationRelativeTo(this);
         actualizarEmpresas();
@@ -47,24 +48,18 @@ public class EliminarReserva extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         BackMenuButton = new javax.swing.JButton();
-        BorrarResvButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TablaPedido = new javax.swing.JTable();
+        TablaAtencion = new javax.swing.JTable();
         EmpresasBox = new javax.swing.JComboBox<>();
-        ReservasBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("Eliminar de reserva");
+        jLabel1.setText("Historial de reserva");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("Empresa:");
-
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel3.setText("Lista reservas:");
 
         BackMenuButton.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         BackMenuButton.setText("Regresar");
@@ -74,28 +69,20 @@ public class EliminarReserva extends javax.swing.JFrame {
             }
         });
 
-        BorrarResvButton.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
-        BorrarResvButton.setText("Borrar Reserva");
-        BorrarResvButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BorrarResvButtonActionPerformed(evt);
-            }
-        });
-
-        TablaPedido.setModel(new javax.swing.table.DefaultTableModel(
+        TablaAtencion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Cod Vend", "Inv ID", "Cantidad", "Modelo"
+                "ID Atencion", "Hora", "Fecha", "Comentarios", "CodVend"
             }
         ));
-        TablaPedido.addMouseListener(new java.awt.event.MouseAdapter() {
+        TablaAtencion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TablaPedidoMouseClicked(evt);
+                TablaAtencionMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(TablaPedido);
+        jScrollPane1.setViewportView(TablaAtencion);
 
         EmpresasBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,63 +90,45 @@ public class EliminarReserva extends javax.swing.JFrame {
             }
         });
 
-        ReservasBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ReservasBoxActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(136, 136, 136))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(84, 84, 84)
-                        .addComponent(BackMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
-                        .addComponent(BorrarResvButton))
+                        .addGap(178, 178, 178)
+                        .addComponent(BackMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ReservasBox, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(EmpresasBox, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(59, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(136, 136, 136))))
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel2)
+                        .addGap(91, 91, 91)
+                        .addComponent(EmpresasBox, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(EmpresasBox, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(ReservasBox, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BorrarResvButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BackMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35))
+                .addGap(47, 47, 47)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addComponent(BackMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         pack();
@@ -170,44 +139,21 @@ public class EliminarReserva extends javax.swing.JFrame {
         Regresar();
     }//GEN-LAST:event_BackMenuButtonActionPerformed
 
-    private void BorrarResvButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarResvButtonActionPerformed
-        try {
-            // Borrar la lista de reservas
-            listaBD.EliminarListaDeReservas(Integer.parseInt(ReservasBox.getSelectedItem().toString()));
-            JOptionPane.showMessageDialog(null, "Se borró exitosamente la lista de reservas");
-            this.actualizarListaReservas();
-            this.actualizarReservas();
-            
-        } catch (Exception ex) {
-            Logger.getLogger(EliminarReserva.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_BorrarResvButtonActionPerformed
-
     private void EmpresasBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmpresasBoxActionPerformed
         try {
             // TODO add your handling code here:
             LimpiarReserva();
-            actualizarListaReservas();
+            actualizarHistorial();
 
         } catch (Exception ex) {
-            Logger.getLogger(EliminarReserva.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HistorialAtencion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_EmpresasBoxActionPerformed
 
-    private void TablaPedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaPedidoMouseClicked
+    private void TablaAtencionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaAtencionMouseClicked
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_TablaPedidoMouseClicked
-
-    private void ReservasBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservasBoxActionPerformed
-        try {
-            // TODO add your handling code here:
-            LimpiarReserva();
-            this.actualizarReservas();
-        } catch (Exception ex) {
-            Logger.getLogger(EliminarReserva.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_ReservasBoxActionPerformed
+    }//GEN-LAST:event_TablaAtencionMouseClicked
 
     private void actualizarEmpresas(){
         try {
@@ -226,37 +172,29 @@ public class EliminarReserva extends javax.swing.JFrame {
         }
     }
     
-    private void actualizarListaReservas() throws Exception{
-        ReservasBox.removeAllItems();
-            int ruc = empresabd.obtenerRucEmp(EmpresasBox.getSelectedItem().toString());
-            ArrayList<ListaReservas> lista = listaBD.ObtenerIDsListaReservas(ruc);
-            ReservasBox.addItem("");
-            lista.forEach( lis -> {
-                ReservasBox.addItem(String.valueOf(lis.getIDListaReservas()));
-            });
-    }
-    
-    private void actualizarReservas() throws Exception{
- 
-            int reserva = Integer.parseInt(this.ReservasBox.getSelectedItem().toString());
-            ArrayList<Resv_CatMaq_Emp> reservas =joinresbd.Join_Ped_CatMaq(reserva); //reservabd.obtenerReservasPorID(reserva);
-            DefaultTableModel tb2 = (DefaultTableModel)TablaPedido.getModel();
-            reservas.forEach((objeto) -> {
-            tb2.addRow(new Object[]{objeto.getCodigoVendedor(),
-            objeto.getInv_Id(),
-            objeto.getCantidad(),
-            objeto.getModelo()});
-        });
-    }
     
     private void Regresar(){
         this.setVisible(false);
         menu.setVisible(true);
     }
     
+    public void actualizarHistorial() throws Exception
+    {
+            ArrayList<AtencionCliente> atencion = atencionbd.obtenerAtencionCliente(this.EmpresasBox.getSelectedItem().toString());
+            DefaultTableModel tb2 = (DefaultTableModel)TablaAtencion.getModel();
+            atencion.forEach((objeto) -> {
+            tb2.addRow(new Object[]{
+            objeto.getIDAtencion(),
+            objeto.getTiempoInicioAtencion(),
+            objeto.getFecha(),
+            objeto.getDescripcion(),
+            objeto.getCodVendedor()});
+        });
+    }
+    
     public void LimpiarReserva()
     {
-        DefaultTableModel tb = (DefaultTableModel)TablaPedido.getModel();
+        DefaultTableModel tb = (DefaultTableModel)TablaAtencion.getModel();
         for(int i=tb.getRowCount()-1; i>=0;i--){
             tb.removeRow(i);
         }
@@ -279,14 +217,46 @@ public class EliminarReserva extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EliminarReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HistorialAtencion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EliminarReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HistorialAtencion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EliminarReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HistorialAtencion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EliminarReserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HistorialAtencion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -324,20 +294,17 @@ public class EliminarReserva extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new EliminarReserva().setVisible(true);
+                new HistorialAtencion().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackMenuButton;
-    private javax.swing.JButton BorrarResvButton;
     private javax.swing.JComboBox<String> EmpresasBox;
-    private javax.swing.JComboBox<String> ReservasBox;
-    private javax.swing.JTable TablaPedido;
+    private javax.swing.JTable TablaAtencion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

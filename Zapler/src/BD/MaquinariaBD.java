@@ -57,19 +57,19 @@ public class MaquinariaBD {
         String sql = "SELECT STOCK FROM MAQUINARIA WHERE ID_MAQ IN (SELECT ID_MAQ FROM CATALOGO_MAQUINARIA " +
                 "WHERE TIPO = '"+tipo+"' AND MARCA = '"+marca+"' AND MODELO = '"+modelo+"')";
         PreparedStatement pst = con.prepareStatement(sql);
-        ResultSet rs = pst.executeQuery();
-        while(rs.next()){
-            actualstock = rs.getInt("STOCK");
+        ResultSet rs = pst.executeQuery(); //1
+        while(rs.next()){ //2
+            actualstock = rs.getInt("STOCK"); //3
         }
         rs.close();
         pst.close();
         con.close();
-        return actualstock;
+        return actualstock; //4
     }
 
 
 
-    public void actualizarStock(String modelo, String marca, String tipo, int cantidad) throws Exception{
+    public void actualizarStock(String tipo, String marca, String modelo, int cantidad) throws Exception{
         Connection con = DriverManager.getConnection(url, user, password);
         String sql = "UPDATE MAQUINARIA SET STOCK = STOCK - ? "
                 + " WHERE ID_MAQ IN (SELECT C.ID_MAQ FROM CATALOGO_MAQUINARIA C, PROVEEDOR P, MAQUINARIA M "
